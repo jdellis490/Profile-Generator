@@ -8,9 +8,12 @@ const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+// Empty array to store question objects
+let createdTeam = [];
+
 // Question for team name
 
-function teamPrompt() {
+function teamQuestions() {
     inquirer.prompt([
         { type: 'input',
           name: 'teamname',
@@ -18,7 +21,8 @@ function teamPrompt() {
         }
     ]).then((answers) => {
         const teamName = answers.teamname;
-    
+        newManager();
+        createdTeam.push(teamName);
     })
 };
 
@@ -39,7 +43,7 @@ function newManager() {
         message: "What is the Manager's email?",
     },
     {   type: "input",
-        name: "officenumber",
+        name: "officeNumber",
         message: "What is the office number?",
     },
 ]).then((answers) => {
@@ -47,8 +51,10 @@ function newManager() {
     const name = answers.name;
     const id = answers.id;
     const email = answers.email;
-    const officeNumber = answers.officenumber;
+    const officeNumber = answers.officeNumber;
     const employee = new Manager(name, id, email, officeNumber, role);
+    newEmployee();
+    createdTeam.push(employee);
     })
 };
 
@@ -72,6 +78,8 @@ function newEmployee() {
             newEngineer();
         }else if (answers.newemployee === "Add Intern"){
             newIntern();
+        }else if (answers.newemployee === "Team is all set."){
+            formTeam();
         }
     })
 };
@@ -101,6 +109,8 @@ function newEngineer() {
         const email = answers.email;
         const github = answers.github;
         const employee = new Engineer(name, id, email, github, role);
+        newEmployee();
+        createdTeam.push(employee);
     })
 };
 // Questions prompt for adding new Intern
@@ -120,7 +130,7 @@ function newIntern() {
         },
         {   type: "input",
             name: "school",
-            message: "Intern's school name?,"
+            message: "Intern's school name?",
         },
     ]).then((answers) => {
         const role = "Intern"
@@ -129,6 +139,8 @@ function newIntern() {
         const email = answers.email;
         const school = answers.school;
         const employee = new Intern(name, id, email, school, role);
+        newEmployee();
+        createdTeam.push(employee);
     })
 };
 
@@ -144,19 +156,24 @@ function formTeam() {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../dist/style.css">
+    <link rel="stylesheet" href="./style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     
     <title>Team Profile Generator</title>
 </head>
 <body>
-    <header class= "header"><b>${createdTeam[0]}</b></header>
+    <header class= "header container-fuild"><h1><b>${createdTeam[0]}</b></h1></header>
+    <main class="container-fluid">
+    <div class="container">
+        <div class="row">
+            
 `
     generateHTML.push(beginHTML);
     for (let i = 1; i < createdTeam.length; i++) {
         
         let employeeInfo = `
+        <div class="col-12 col-md-4">
         <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
         <div class="card-header"><br> ${createdTeam[i].role} </br></div>
         <div class="card-body">
@@ -165,9 +182,9 @@ function formTeam() {
             <li class="list-group-item">ID: ${createdTeam[i].id} </li>
             <li class="list-group-item">Email: <a href="mailto:${createdTeam[i].email}">${createdTeam[i].email}</a></li>
 `
-        if (createdTeam[i].officenumber){
+        if (createdTeam[i].officeNumber){
             employeeInfo += `
-            <li class="list-group-item">Office Number: ${createdTeam[i].officenumber} </li>
+            <li class="list-group-item">Office Number: ${createdTeam[i].officeNumber} </li>
         </ul>`
         } else if (createdTeam[i].github) {
             employeeInfo += `
@@ -180,19 +197,27 @@ function formTeam() {
         } employeeInfo += `
             </div>
             </div>
-            `
-        generateHTML.push(employeeInfo);
+            </div>
+            `            
+            generateHTML.push(employeeInfo);
     }
-`
-</body>
-</html>`
+
+    const endHTML =
+    ` </div>
+      </div>
+    </main>
+    </body>
+    </html>
+    `
+    generateHTML.push(endHTML);
+
 
 // Write to File function to make HTML page
-fs.writeFile(`.dist/team.html`, generateHTML.join(""), (error) => {
+fs.writeFile(`./dist/index.html`, generateHTML.join(""), (error) => {
     if (error) throw error;
-    console.log('HTML has been written.');
+    console.log('Team Profile has been written.');
 });
 
 }
-teamPrompt();
+teamQuestions();
 
