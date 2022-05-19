@@ -52,6 +52,31 @@ function newManager() {
     })
 };
 
-newEmployee();
+//Prompt for new Employee
+function newEmployee() {
+    inquirer.prompt( [
+        {   type: "list",
+            name: "newemployee",
+            message: "Add new Employee to the team?",
+            choices:[
+                "Add Manager",
+                "Add Engineer",
+                "Add Intern",
+                "Team is all set.",
+            ],
+        },
+    ]).then((answers) => {
+        if (answers.newemployee === "Add Manager"){
+            newManager();
+        }else if (answers.newemployee === "Add Engineer"){
+            newEngineer();
+        }else if (answers.newemployee === "Add Intern"){
+            newIntern();
+        }
+    })
+};
+
+newEngineer();
+newIntern();
 teamPrompt();
 
