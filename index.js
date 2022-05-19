@@ -75,8 +75,62 @@ function newEmployee() {
         }
     })
 };
+// Questions prompt for adding new Engineer
+function newEngineer() {
+    inquirer.prompt([
+        {   type: "input",
+            name: "name",
+            message: "Name of Engineer?",
+        },
+        {   type: "input",
+            name: "id",
+            message: "What is Engineer's ID?",
+        },
+        {   type: "input",
+            name: "email",
+            message: "What is the Engineer's email address?",
+        },
+        {   type: "input",
+            name: "github",
+            message: "Engineer's GitHub username?",
+        },
+    ]).then((answers) => {
+        const role = "Engineer"
+        const name = answers.name;
+        const id = answers.id;
+        const email = answers.email;
+        const github = answers.github;
+        const employee = new Engineer(name, id, email, github, role);
+    })
+};
+// Questions prompt for adding new Intern
+function newIntern() {
+    inquirer.prompt([
+        {   type: "input",
+            name: "name",
+            message: "Name of Intern?",
+        },
+        {   type: "input",
+            name: "id",
+            message: "What is the Intern's ID?",
+        },
+        {   type: "input",
+            name: "email",
+            message: "What is the Intern's email address?",
+        },
+        {   type: "input",
+            name: "school",
+            message: "Intern's school name?,"
+        },
+    ]).then((answers) => {
+        const role = "Intern"
+        const name = answers.name;
+        const id = answers.id;
+        const email = answers.email;
+        const school = answers.school;
+        const employee = new Intern(name, id, email, school, role);
+    })
+};
 
-newEngineer();
-newIntern();
 teamPrompt();
 
