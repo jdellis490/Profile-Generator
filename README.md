@@ -9,8 +9,14 @@ how to write tests to test one's code.
 
 ## Installation
 
-To intall one must run `npm init -y` and `npm install inquier` from the terminal. Then simply type `node index.js`
-and follow the prompts in the terminal
+To install, one must run `npm init -y` and `npm install inquier` from the terminal. Then simply type `node index.js`
+and follow the prompts in the terminal. Here is a video demonstration:
+
+
+
+https://user-images.githubusercontent.com/81279037/169453601-46c44962-0655-4091-8cd2-fceef59e96af.mp4
+
+
 
 ## Tests
 
