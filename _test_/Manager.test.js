@@ -11,8 +11,8 @@ test('Can get role with getRole method on manager object', () => {
     expect(manager.getRole()).toBe(employeeRole);
 })
 test('Can get office number with getOfficeNumber method on manager object', () => {
-    const officeNumber = 50;
-    const manager = new Manager('Justin', 2, 'email', 50);
+    const officeNumber = 4803015000;
+    const manager = new Manager('name', 'id', 'email', 4803015000);
     expect(manager.getOfficeNumber()).toBe(officeNumber);
 })
 
