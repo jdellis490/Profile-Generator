@@ -184,7 +184,7 @@ function formTeam() {
 `
         if (createdTeam[i].officeNumber){
             employeeInfo += `
-            <li class="list-group-item">Office Number: ${createdTeam[i].officeNumber} </li>
+            <li class="list-group-item">Office Number: <br>${createdTeam[i].officeNumber} </li>
         </ul>`
         } else if (createdTeam[i].github) {
             employeeInfo += `
